@@ -3,42 +3,43 @@ import { useState } from "react";
 
 import Link from "next/link";
 import BottomBar from "./Bottombar";
+import { usePathname } from "next/navigation";
 
 const sidebarItems = [
   {
     icon: "./main_icon.png",
     label: "Dashboard",
-    path: "#",
+    path: "/",
     bg: "bg-gray-200",
     textColor: "",
   },
-  { icon: "./hr_user.png", label: "HR", path: "#", bg: "", textColor: "" },
-  { icon: "./crm_icon.png", label: "CRM", path: "#", bg: "", textColor: "" },
+  { icon: "./hr_user.png", label: "HR", path: "/hr", bg: "", textColor: "" },
+  { icon: "./crm_icon.png", label: "CRM", path: "/crm", bg: "", textColor: "" },
   {
     icon: "./finance_icon.png",
     label: "Finance",
-    path: "#",
+    path: "/finance",
     bg: "",
     textColor: "",
   },
   {
     icon: "./analytics_icon.png",
     label: "Analytics",
-    path: "#",
+    path: "/analytics",
     bg: "",
     textColor: "",
   },
   {
     icon: "./asset_control.png",
     label: "Asset Control",
-    path: "#",
+    path: "/asset_control",
     bg: "",
     textColor: "",
   },
   {
     icon: "./support.svg",
     label: "Support",
-    path: "#",
+    path: "/support",
     bg: "",
     textColor: "",
   },
@@ -46,6 +47,7 @@ const sidebarItems = [
 
 const Sidebar = ({ children }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const pathname = usePathname();
 
   const handleLinkClick = () => {
     if (!isExpanded) {
@@ -53,7 +55,6 @@ const Sidebar = ({ children }) => {
     }
   };
 
-  console.log(isExpanded);
   return (
     <div className="flex">
       <div
@@ -112,7 +113,11 @@ const Sidebar = ({ children }) => {
                 key={index}
                 href={item.path}
                 onClick={handleLinkClick}
-                className={`flex items-center gap-2 p-2 rounded-lg ${item.bg} ${item.textColor} hover:bg-gray-200  transition-colors duration-300`}
+                className={`flex items-center gap-2 p-2 rounded-lg  ${
+                  pathname === item.path ? "font-bold" : "font-semibold"
+                } hover:bg-[#FFE353]  transition-colors duration-300 ${
+                  pathname === item.path && "bg-[#FFE353]"
+                }`}
               >
                 <img src={item.icon} className="w-6 h-6" />
                 {isExpanded && (

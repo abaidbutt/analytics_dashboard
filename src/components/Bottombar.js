@@ -1,16 +1,17 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
 const TopBarItems = [
   {
     label: "Dashboard",
-    path: "#",
+    path: "/",
     bg: "bg-gray-200",
     textColor: "",
   },
   {
     label: "CRM",
-    path: "#",
+    path: "/crm",
     bg: "",
     textColor: "",
   },
@@ -22,13 +23,13 @@ const TopBarItems = [
   },
   {
     label: "HR",
-    path: "#",
+    path: "/hr",
     bg: "",
     textColor: "",
   },
   {
     label: "Settings",
-    path: "#",
+    path: "/support",
     bg: "",
     textColor: "",
   },
@@ -37,28 +38,28 @@ const bottomBarItems = [
   {
     icon: "./main_icon.png",
     label: "Income",
-    path: "#",
+    path: "/support",
     bg: "bg-gray-200",
     textColor: "",
   },
   {
     icon: "./hr_user.png",
     label: "Expenditure",
-    path: "#",
+    path: "/hr",
     bg: "",
     textColor: "",
   },
   {
     icon: "./finance_icon.png",
     label: "Finance",
-    path: "#",
+    path: "/finance",
     bg: "",
     textColor: "",
   },
   {
     icon: "./analytics_icon.png",
     label: "Analytics",
-    path: "#",
+    path: "/analytics",
     bg: "",
     textColor: "",
   },
@@ -66,13 +67,14 @@ const bottomBarItems = [
   {
     icon: "./asset_control.png",
     label: "Other",
-    path: "#",
+    path: "/asset_control",
     bg: "",
     textColor: "",
   },
 ];
 
 const BottomBar = ({ children }) => {
+  const pathname = usePathname();
   return (
     <div className="flex flex-col h-screen justify-between">
       <div className="flex justify-around items-center p-4">
@@ -80,7 +82,9 @@ const BottomBar = ({ children }) => {
           <Link
             key={index}
             href={item.path}
-            className={`flex flex-col items-center gap-1 p-2 ${item.bg} ${item.textColor} font-semibold rounded hover:bg-blue-500 hover:text-white transition-colors duration-300`}
+            className={`flex flex-col items-center gap-1 p-2 ${
+              pathname === item.path && "bg-[#FFE353]"
+            }  font-semibold rounded transition-colors duration-300`}
           >
             {item.label ? (
               <span className="text-md">{item.label}</span>

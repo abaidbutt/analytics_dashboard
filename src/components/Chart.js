@@ -27,7 +27,7 @@ const Chart = () => {
             {
               from: -100,
               to: -46,
-              color: "#F15B46",
+              color: "#FFE353",
             },
             {
               from: -45,
