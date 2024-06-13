@@ -17,6 +17,9 @@ const Chart = () => {
       type: "bar",
       height: 350,
     },
+    grid: {
+      show: false,
+    },
     plotOptions: {
       bar: {
         colors: {
@@ -39,9 +42,13 @@ const Chart = () => {
     dataLabels: {
       enabled: false,
     },
+
     yaxis: {
+      labels: {
+        show: false, // if true, grid lines appears
+      },
       title: {
-        text: "Growth",
+        text: "",
       },
       labels: {
         formatter: function (y) {
@@ -49,8 +56,32 @@ const Chart = () => {
         },
       },
     },
+    grid: {
+      show: false, // you can either change hear to disable all grids
+      xaxis: {
+        lines: {
+          show: false, //or just here to disable only x axis grids
+        },
+      },
+      yaxis: {
+        lines: {
+          show: false, //or just here to disable only y axis
+        },
+      },
+    },
     xaxis: {
+      show: false,
+      labels: {
+        show: false,
+      },
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
       type: "datetime",
+
       categories: [
         "2012-09-01",
         "2012-10-01",
@@ -74,7 +105,7 @@ const Chart = () => {
 
   return (
     <div>
-      <div id="chart">
+      <div>
         <ReactApexChart
           options={options}
           series={series}

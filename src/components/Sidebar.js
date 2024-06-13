@@ -2,13 +2,14 @@
 import { useState } from "react";
 
 import Link from "next/link";
+import BottomBar from "./Bottombar";
 
 const sidebarItems = [
   {
     icon: "./main_icon.png",
     label: "Dashboard",
     path: "#",
-    bg: "bg-[#FEB019]",
+    bg: "bg-gray-200",
     textColor: "",
   },
   { icon: "./hr_user.png", label: "HR", path: "#", bg: "", textColor: "" },
@@ -35,7 +36,7 @@ const sidebarItems = [
     textColor: "",
   },
   {
-    icon: "./asset_control.png",
+    icon: "./support.svg",
     label: "Support",
     path: "#",
     bg: "",
@@ -52,6 +53,7 @@ const Sidebar = ({ children }) => {
     }
   };
 
+  console.log(isExpanded);
   return (
     <div className="flex">
       <div
@@ -61,23 +63,47 @@ const Sidebar = ({ children }) => {
         onMouseEnter={() => setIsExpanded(true)}
         onMouseLeave={() => setIsExpanded(false)}
       >
-        <div className="flex flex-col items-start gap-4">
+        <div className="flex flex-col items-center gap-4">
           <div className="flex flex-col items-center">
+            <img src="./logo.png" className="w-12 h-12" />
             <div className={`text-md  space-y-2 my-4`}>
-              <h5>TBID number</h5>
-              <h5>1231432423</h5>
+              <h5 className="text-semibold flex items-center gap-1 justify-between">
+                TBID
+                {isExpanded ? (
+                  " number"
+                ) : (
+                  <img src="./info.png" className="w-4 h-4" />
+                )}
+              </h5>
+              <h5
+                className={`text-semibold flex items-center gap-1 justify-between ${
+                  isExpanded && "font-semibold"
+                }`}
+              >
+                {isExpanded ? "1231432423" : "UID"}{" "}
+                {isExpanded ? "" : <img src="./info.png" className="w-4 h-4" />}
+              </h5>
             </div>
-            <div className={`text-sm bg-blue-500 text-white p-2 rounded `}>
-              Secure Your Data
-            </div>
+            {isExpanded && (
+              <div className={`text-sm bg-blue-500 text-white p-2 rounded `}>
+                Secure Your Data
+              </div>
+            )}
           </div>
-          <div className="flex justify-between">
-            {["./conversation.png", "./settings.png", "./user_card.png"].map(
-              (item, index) => (
-                <div key={index} className={` transition-opacity duration-300`}>
-                  <img src={item} className={isExpanded && "w-8 h-8"} />
-                </div>
+          <div className="flex justify-around w-full">
+            {isExpanded ? (
+              ["./conversation.png", "./settings.png", "./user_card.png"].map(
+                (item, index) => (
+                  <div
+                    key={index}
+                    className={` transition-opacity duration-300`}
+                  >
+                    <img src={item} className={isExpanded && "w-8 h-8"} />
+                  </div>
+                )
               )
+            ) : (
+              <img src={"./frame_icon.png"} className="w-12 h-3/4" />
             )}
           </div>
           <nav className="flex flex-col gap-4">
@@ -86,22 +112,33 @@ const Sidebar = ({ children }) => {
                 key={index}
                 href={item.path}
                 onClick={handleLinkClick}
-                className={`flex items-center gap-2 p-2 rounded-lg ${item.bg} ${item.textColor} hover:bg-blue-500 hover:text-white transition-colors duration-300`}
+                className={`flex items-center gap-2 p-2 rounded-lg ${item.bg} ${item.textColor} hover:bg-gray-200  transition-colors duration-300`}
               >
                 <img src={item.icon} className="w-6 h-6" />
-                <span
-                  className={`transition-opacity duration-300 ${
-                    isExpanded ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  {item.label}
-                </span>
+                {isExpanded && (
+                  <span
+                    className={`transition-opacity duration-300 ${
+                      isExpanded ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                )}
               </Link>
             ))}
           </nav>
+          <div className="flex justify-end w-full">
+            <button onClick={() => setIsExpanded(!isExpanded)}>
+              {isExpanded ? (
+                <img src={"./chevron-right.svg"} className="w-12 h-1/2" />
+              ) : (
+                <img src="./chevron-left.svg" className="w-12 h-1/2" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
-      {children}
+      <>{children}</>
     </div>
   );
 };
